@@ -15,40 +15,44 @@ public class EMailsPage {
         PageFactory.initElements(driver, this);
         this.driver = driver; }
 
-    @FindBy(xpath = "/html/body/div[7]/div[3]/div/div[1]/div[3]/header/div[2]/div[2]/div[2]/form/div/table/tbody/tr/td/table/tbody/tr/td/div/input[1]")
+    @FindBy(xpath = "//*[@id='gs_lc50']/input[1]")
     private WebElement searchField;
 
-    @FindBy(xpath = "//*[@id=\"aso_search_form_anchor\"]/button[4]")
+    @FindBy(xpath = "//*[@id='aso_search_form_anchor']/button[4]")
     private WebElement searchBtn;
 
     @FindBy(xpath = "/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div[2]/div[2]/div/span/div[1]/span/span[2]")
     private WebElement numberOfEMails;
 
-    @FindBy(xpath = "/html/body/div[7]/div[3]/div/div[2]/div[1]/div[1]/div[1]/div/div/div/div[1]/div/div")
+    @FindBy(xpath = "//*[contains(@class, 'T-I T-I-KE L3')]")
     private WebElement writeEMailBtn;
 
-    @FindBy(xpath = "/html/body/div[20]/div/div/div/div[1]/div[3]/div[1]/div[1]/div/div/div/div[3]/div/div/div[4]/table/tbody/tr/td[2]/table/tbody/tr[1]/td/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[2]/div[2]/div")
+    @FindBy(xpath = "//*[contains(@class, 'Am Al editable LW-avf tS-tW')]")
     private WebElement mailBody;
 
-    @FindBy(xpath = "/html/body/div[20]/div/div/div/div[1]/div[3]/div[1]/div[1]/div/div/div/div[3]/div/div/div[4]/table/tbody/tr/td[2]/form/div[1]/table/tbody/tr[1]/td[2]/div/div/textarea")
+    @FindBy(xpath = "//*[contains(@name, 'to')]")
     private WebElement sendingAddress;
 
-    @FindBy(xpath = "/html/body/div[20]/div/div/div/div[1]/div[3]/div[1]/div[1]/div/div/div/div[3]/div/div/div[4]/table/tbody/tr/td[2]/form/div[3]/div/input")
+    @FindBy(xpath = "//*[contains(@name, 'subjectbox')]")
     private WebElement subjectField;
 
-    @FindBy(xpath = "/html/body/div[20]/div/div/div/div[1]/div[3]/div[1]/div[1]/div/div/div/div[3]/div/div/div[4]/table/tbody/tr/td[2]/table/tbody/tr[2]/td/div/div/div[4]/table/tbody/tr/td[1]/div/div[2]/div[1]")
+    @FindBy(xpath = "//*[contains(@class, 'T-I J-J5-Ji aoO v7 T-I-atl L3')]")
     private WebElement sendBtn;
 
 
     public void search(String request){
         /* Ждем прогрузки элемента и отправляем нужный запрос*/
-        WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[7]/div[3]/div/div[1]/div[3]/header/div[2]/div[2]/div[2]/form/div/table/tbody/tr/td/table/tbody/tr/td/div/input[1]")));
+        WebDriverWait waitField = new WebDriverWait(driver, 20);
+        waitField.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='gs_lc50']/input[1]")));
         searchField.sendKeys(request);
+        WebDriverWait waitBtn = new WebDriverWait(driver, 20);
+        waitBtn.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='aso_search_form_anchor']/button[4]")));
         searchBtn.click();
     }
 
     public String getNumberOfEMails(){
+
+        if (!numberOfEMails.isEnabled()) return "0";
         return numberOfEMails.getText();
     }
 
@@ -68,8 +72,11 @@ public class EMailsPage {
         subjectField.sendKeys(subject);
     }
 
+    /*Нажимаем кнопку и ожидаем появления уведомления "Письмо отправлено"*/
     public void clickSendBtn(){
         sendBtn.click();
+        WebDriverWait waitBtn = new WebDriverWait(driver, 20);
+        waitBtn.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@class, 'bAq')]")));
     }
 
 }

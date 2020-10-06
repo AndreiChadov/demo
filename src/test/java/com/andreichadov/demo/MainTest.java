@@ -27,7 +27,7 @@ public class MainTest {
         }
         loginPage = new LoginPage(driver);
         eMailsPage = new EMailsPage(driver);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.get("https://gmail.com/");
     }
 
@@ -48,11 +48,12 @@ public class MainTest {
         /* Переводим русские символы в нужную кодировку, пишем и отправляем сообщение */
         String subject = null;
         try {
-            subject = new String(new String("Тестовое задание. Чадов").getBytes("windows-1251"),"UTF-8");
+            subject = new String("Тестовое задание. Чадов".getBytes("windows-1251"),"UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         eMailsPage.typeEmailSubject(subject);
+        System.out.println(numberOfEmails);
         eMailsPage.typeMessage(numberOfEmails);
         eMailsPage.clickSendBtn();
     }

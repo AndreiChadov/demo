@@ -15,13 +15,13 @@ public class LoginPage {
     @FindBy(xpath = "//*[contains(@id, 'identifierId')]")
     private WebElement loginField;
 
-    @FindBy(xpath = "//*[@id=\"identifierNext\"]/div/button")
+    @FindBy(xpath = "//*[@id='identifierNext']")
     private WebElement loginBtn;
 
-    @FindBy(xpath = "//*[@id=\"password\"]/div[1]/div/div[1]/input")
+    @FindBy(xpath = "//*[contains(@name, 'password')]")
     private WebElement passwordField;
 
-    @FindBy(xpath = "//*[@id=\"passwordNext\"]/div/button/div[2]")
+    @FindBy(xpath = "//*[@id='passwordNext']")
     private WebElement passwordNextBtn;
 
     public void inputLogin(String login) {
